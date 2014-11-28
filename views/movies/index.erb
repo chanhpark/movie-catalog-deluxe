@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Movie Homepage</title>
+</head>
+<body>
+  <div>
+    <header>
+      <h1>Movie Titles!</h1>
+    </header>
+  <ul><% if !@page_num == 0 || !@page_num == 1 || @page_num == nil? %>
+    <a href="/movies?page=<%= @page_num = @page_num + 2 %>"> Next Page </a>
+      <% else %>
+        <a href="/movies?page=<%= @page_num + 1 %>"> Next Page </a>
+  <% end %> </ul>
+
+
+    <% if @page_num > 1 %>
+  <ul>  <a href="/movies?page=<%= @page_num = @page_num - 1 %>"> Previous Page </a>
+    <% end %> </ul>
+
+    <form action="/movies" method="get">
+      <label for="query">Search: </label>
+      <input type="text" name="query" id="query" />
+
+      <input type="submit" value="Search" />
+    </form>
+<% if @query %>
+  <h1> Search results for: <%= @query %></h1>
+    <% @movies_search.each do |search| %>
+      <% if search['title'].downcase.include?(@query.downcase) %>
+      <li><a href='/movies/<%=search['id']%>'><%= search['title'] %></a>
+        <% @search_array << search["title"] %>
+        <% end %>
+
+        <% if search['synopsis'] == nil %>
+          <% elsif search['synopsis'].downcase.include?(@query.downcase) %>
+            <% if !@search_array.include?search['title'] %>
+              <li><a href='/movies/<%=search['id']%>'><%= search["title"] %></a>
+                <% @search_array << search['title'] %>
+            <% end %>
+          <% end %>
+        <% end %>
+
+      <% else %>
+      <ul>
+        <% @movies.each do |movie| %>
+        <li><a href='/movies/<%=movie['id'] %>'> <%= movie['title'] %></li>
+        <% end %>
+      <% end %>
+      </ul>
+
+    </selection>
+
+  </div>
+</body>
+</html>
