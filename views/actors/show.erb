@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Movie Homepage</title>
+</head>
+<body>
+  <div>
+    <header>
+      <h1><a href ='/actors'> ACTORS </h1></a>
+    </header>
+
+    <selection>
+      <h1><%= @actor_info[0]['name'] %></h1>
+      <% @actor_info.each do |actor| %>
+      <li><a href='/movies/<%= actor['id'] %>'><%= "#{actor['title']}</a> - #{actor['character']}" %></li>
+      <% end %>
+
+
+    </selection>
+
+  </div>
+</body>
+</html>
