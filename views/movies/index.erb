@@ -30,7 +30,7 @@
     <% @movies_search.each do |search| %>
       <% if search['title'].downcase.include?(@query.downcase) %>
       <li><a href='/movies/<%=search['id']%>'><%= search['title'] %></a>
-        <% @search_array << search["title"] %>
+        <% @search_movie << search["title"] %>
         <% end %>
 
         <% if search['synopsis'] == nil %>

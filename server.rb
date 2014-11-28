@@ -100,10 +100,10 @@ get '/' do
 end
 
 get '/actors' do
-  @search_array = []
+  @search_actor = []
   @query = params[:query]
   @actors = get_actors
-  @actors_search = get_actors { |actor| actor['name']}
+  @actors_search = get_actors { |actor| actor[0]['name']}
 
   erb :'/actors/index'
 end
@@ -127,7 +127,7 @@ end
 # is a link to the details page for that movie.
 
 get '/movies' do
-  @search_array = []
+  @search_movie = []
   @query = params[:query]
   @movies_search = get_movies { |movie| movie['title']}
 

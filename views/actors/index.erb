@@ -17,21 +17,21 @@
       <input type="submit" value="Search" />
     </form>
 
-  <% if @query %>
-  <h1> Search results for: <%= @query %></h1>
+    <% if @query %>
+    <h1> Search results for: <%= @query %></h1>
     <% @actors_search.each do |search| %>
-          <% if search["name"].downcase.include?(@query.downcase) %>
+        <% if search["name"].downcase.include?(@query.downcase) %>
           <li><a href='/actors/<%=search['id']%>'><%= search["name"] %></a>
-              <% @search_array << search["name"] %>
-
+          <% @search_actor << search["name"] %>
+        <% end %>
+    <% end %>
 
       <% else %>
         <% @actors.each do |actor| %>
         <li><a href='/actors/<%=actor['id'] %>'><%= actor["name"] %></a></li>
         <% end %>
-      <% end %>
     <% end %>
-    <% end %>
+
     </selection>
 
   </div>
