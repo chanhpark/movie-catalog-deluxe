@@ -44,6 +44,24 @@ def find_actor_by_id(id)
   @actors_id.to_a
 end
 
+def actors_page_limit(page_num)
+  if page_num.to_i < 1
+    offset = 0
+  else
+    offset = page_num.to_i * 20 - 20
+  end
+  sql = "SELECT name, actors.id
+  FROM actors
+  JOIN cast_members ON actors.id = cast_members.actor_id
+  ORDER BY name
+  LIMIT 20
+  OFFSET $1"
+
+  db_connection do |db|
+    db.exec_params(sql, [offset])
+  end
+end
+
 ##############################
 ####### MOVIE METHODS ########
 ##############################
@@ -58,7 +76,7 @@ def get_movies
   @movies.to_a
 end
 
-def page_limit(page_num)
+def movies_page_limit(page_num)
   if page_num.to_i < 1
      offset = 0
       else
@@ -105,6 +123,9 @@ get '/actors' do
   @actors = get_actors
   @actors_search = get_actors { |actor| actor[0]['name']}
 
+  @page_num = params['page'].to_i || 1
+  @actors = actors_page_limit(@page_num)
+
   erb :'/actors/index'
 end
 
@@ -134,7 +155,7 @@ get '/movies' do
   @movies = get_movies
 
   @page_num = params['page'].to_i || 1
-  @movies = page_limit(@page_num)
+  @movies = movies_page_limit(@page_num)
 
   erb :'/movies/index'
 end

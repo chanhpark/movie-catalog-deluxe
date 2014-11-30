@@ -32,7 +32,16 @@
         <% end %>
     <% end %>
 
-    </selection>
+    <ul>
+      <% if @page_num > 1 %>
+      <a href="/actors?page=<%= @page_num - 1 %>"> Previous Page </a> |
+      <% end %>
+      <% if params['page'].to_i == 0 %>
+      <a href="/actors?page=<%= @page_num + 2 %>"> Next Page </a>
+      <% else %>
+      <a href="/actors?page=<%= @page_num + 1 %>"> Next Page</a>
+      <% end %>
+
 
   </div>
 </body>

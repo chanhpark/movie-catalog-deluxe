@@ -8,16 +8,6 @@
     <header>
       <h1>Movie Titles!</h1>
     </header>
-  <ul><% if !@page_num == 0 || !@page_num == 1 || @page_num == nil? %>
-    <a href="/movies?page=<%= @page_num = @page_num + 2 %>"> Next Page </a>
-      <% else %>
-        <a href="/movies?page=<%= @page_num + 1 %>"> Next Page </a>
-  <% end %> </ul>
-
-
-    <% if @page_num > 1 %>
-  <ul>  <a href="/movies?page=<%= @page_num = @page_num - 1 %>"> Previous Page </a>
-    <% end %> </ul>
 
     <form action="/movies" method="get">
       <label for="query">Search: </label>
@@ -35,9 +25,9 @@
 
         <% if search['synopsis'] == nil %>
           <% elsif search['synopsis'].downcase.include?(@query.downcase) %>
-            <% if !@search_array.include?search['title'] %>
+            <% if !@search_movie.include?search['title'] %>
               <li><a href='/movies/<%=search['id']%>'><%= search["title"] %></a>
-                <% @search_array << search['title'] %>
+                <% @search_movie << search['title'] %>
             <% end %>
           <% end %>
         <% end %>
@@ -50,7 +40,15 @@
       <% end %>
       </ul>
 
-    </selection>
+        <ul>
+          <% if @page_num > 1 %>
+          <a href="/movies?page=<%= @page_num - 1 %>"> Previous Page </a> |
+          <% end %>
+          <% if params['page'].to_i == 0 %>
+          <a href="/movies?page=<%= @page_num + 2 %>"> Next Page </a>
+          <% else %>
+          <a href="/movies?page=<%= @page_num + 1 %>"> Next Page</a>
+          <% end %>
 
   </div>
 </body>
